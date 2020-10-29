@@ -1,6 +1,6 @@
 const http = require("http");
 const PORT = process.env.PORT || 5000
-const { getAllItems, getItemById } = require("./controllers/itemController")
+const { getAllItems, getItemById, addItem } = require("./controllers/itemController")
 http.createServer((req, res) => {
     // GET all items
     if (req.url == "/api/items" && req.method == "GET") {
@@ -10,7 +10,12 @@ http.createServer((req, res) => {
     else if (req.url.match(/\/api\/items\/([0-9]+)/) && req.method == "GET") {
         const id = req.url.split("/")[3]
         getItemById(req, res, id)
-    } else {
+    }
+    // POST Item to DB
+    else if (req.url == "/api/items" && req.method == "POST") {
+        addItem(req, res);
+    }
+    else {
         res.writeHead(404, { "Content-Type": "application/json" })
         res.end(JSON.stringify({ error: "Items Not Found" }))
     }

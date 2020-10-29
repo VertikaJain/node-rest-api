@@ -1,4 +1,5 @@
-const { findAllItems, findItemById } = require("../models/itemModel")
+const { findAllItems, findItemById, addItemToDB } = require("../models/itemModel")
+const { v4: uuidv4 } = require("uuid")
 
 // GET All Items
 async function getAllItems(req, res) {
@@ -28,4 +29,24 @@ async function getItemById(req, res, id) {
     }
 }
 
-module.exports = { getAllItems, getItemById }
+// Add Item to DB (Create-201)
+function addItem(req, res) {
+    try {
+        let body = ""
+        req.on("data", (data) => {
+            body += data.toString()
+        })
+        req.on("end", async() => {
+            let { title, description, price } = JSON.parse(body)
+            let item = { id: uuidv4(), title, description, price }
+            const items = await addItemToDB(item)
+            res.writeHead(201, { "Content-Type": "application/json" })
+            res.end(JSON.stringify(items))
+        })
+    } catch (error) {
+        res.writeHead(500, { "Content-Type": "application/json" })
+        res.end(JSON.stringify({ error: "Cannot add Item." }))
+    }
+}
+
+module.exports = { getAllItems, getItemById, addItem }

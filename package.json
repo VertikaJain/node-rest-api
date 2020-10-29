@@ -19,5 +19,8 @@
   "homepage": "https://github.com/VertikaJain/node-rest-api#readme",
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "uuid": "^8.3.1"
   }
 }

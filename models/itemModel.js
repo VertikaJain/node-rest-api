@@ -1,4 +1,5 @@
 const items = require("../items")
+const writeDataToFile = require("../utils/utils")
 
 // Find All Items
 function findAllItems() {
@@ -13,4 +14,13 @@ function findItemById(id) {
     })
 }
 
-module.exports = { findAllItems, findItemById }
+// Add Item to DB after New Object Creation
+function addItemToDB(item) {
+    return new Promise((resolve, reject) => {
+        items.push(item)
+        writeDataToFile("items.json", items)
+        resolve(items)
+    })
+}
+
+module.exports = { findAllItems, findItemById, addItemToDB }
