@@ -1,0 +1,23 @@
+{
+  "name": "vanilla-node-rest-api",
+  "version": "1.0.0",
+  "description": "Vanilla REST API in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VertikaJain/node-rest-api.git"
+  },
+  "author": "Vertika Jain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VertikaJain/node-rest-api/issues"
+  },
+  "homepage": "https://github.com/VertikaJain/node-rest-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
