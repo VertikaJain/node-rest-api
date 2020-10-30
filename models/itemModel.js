@@ -1,4 +1,4 @@
-const items = require("../items")
+let items = require("../items")
 const writeDataToFile = require("../utils/utils")
 
 // Find All Items
@@ -23,4 +23,24 @@ function addItemToDB(item) {
     })
 }
 
-module.exports = { findAllItems, findItemById, addItemToDB }
+// Update Item in DB 
+function updateItemInDB(id, updatedItem) {
+    return new Promise((resolve, reject) => {
+        // Using built-in method findIndex()
+        let index = items.findIndex(item => item.id == id)
+        items[index] = updatedItem
+        // Using built-in method map()
+        /* let updatedItems = items.map(item => {
+            if (item.id == id) {
+                item.name = updatedItem.name
+                item.description = updatedItem.description
+                item.price = updatedItem.price
+            }
+            return item
+        }) */
+        writeDataToFile("items.json", items)
+        resolve(items)
+    })
+}
+
+module.exports = { findAllItems, findItemById, addItemToDB, updateItemInDB }
