@@ -4,10 +4,10 @@
 - Since we cannot use `req.body` like in case of Express, I have used `req.on()` and `req.end()` events.
 - Use of Regular Expressions and split() to detect type of method to be used from the URL.
 - DB functionalities done using array built-in methods:
-        1. find()
-        2. push()
-        3. findIndex()
-        4. filter()
+                - find()
+                - push()
+                - findIndex()
+                - filter()
 - Utility file for updating DB (json file in this project) using fs.writeFileSync().
 
 ## Status Codes
