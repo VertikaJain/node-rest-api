@@ -1,4 +1,4 @@
-const { findAllItems, findItemById, addItemToDB, updateItemInDB } = require("../models/itemModel")
+const { findAllItems, findItemById, addItemToDB, updateItemInDB, removeItemById } = require("../models/itemModel")
 const { v4: uuidv4 } = require("uuid")
 
 // GET All Items
@@ -37,7 +37,7 @@ function addItem(req, res) {
             body += data.toString()
         })
         req.on("end", async () => {
-            let { name, description, price } = JSON.parse(body)
+            let { name, description, price } = JSON.parse(body) // converts JSON string to Obj
             let item = { id: uuidv4(), name, description, price }
             const items = await addItemToDB(item)
             res.writeHead(201, { "Content-Type": "application/json" })
@@ -79,6 +79,20 @@ async function updateItem(req, res, id) {
     }
 }
 
+// DELETE Item by ID
+async function removeItem(req, res, id) {
+    try {
+        const items = await removeItemById(id)
+        if (!items) { //undefined
+            res.writeHead(404, { "Content-Type": "application/json" })
+            res.end(JSON.stringify({ error: "Item Not Found" }))
+        }
+        res.writeHead(200, { "Content-Type": "application/json" })
+        res.end(JSON.stringify(items))
+    } catch (error) {
+        res.writeHead(404, { "Content-Type": "application/json" })
+        res.end(JSON.stringify({ error: "Cannot Delete Item." }))
+    }
+}
 
-
-module.exports = { getAllItems, getItemById, addItem, updateItem }
+module.exports = { getAllItems, getItemById, addItem, updateItem, removeItem }

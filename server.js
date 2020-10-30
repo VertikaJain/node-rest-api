@@ -1,6 +1,6 @@
 const http = require("http");
 const PORT = process.env.PORT || 5000
-const { getAllItems, getItemById, addItem, updateItem } = require("./controllers/itemController")
+const { getAllItems, getItemById, addItem, updateItem, removeItem } = require("./controllers/itemController")
 http.createServer((req, res) => {
     // GET all items
     if (req.url == "/api/items" && req.method == "GET") {
@@ -15,10 +15,15 @@ http.createServer((req, res) => {
     else if (req.url == "/api/items" && req.method == "POST") {
         addItem(req, res);
     }
-    // PUT / update item
+    // PUT / update item based on ID
     else if (req.url.match(/\/api\/items\/([0-9]+)/) && req.method == "PUT") {
         const id = req.url.split("/")[3]
         updateItem(req, res, id)
+    }
+    // DELETE item based on ID
+    else if (req.url.match(/\/api\/items\/([0-9]+)/) && req.method == "DELETE") {
+        const id = req.url.split("/")[3]
+        removeItem(req, res, id)
     }
     else {
         res.writeHead(404, { "Content-Type": "application/json" })
